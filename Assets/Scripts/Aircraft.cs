@@ -8,27 +8,6 @@ public class Aircraft : MonoBehaviour
 {
     //public List<GameObject> aircraft = new List<GameObject>();
     //public GameObject Helicopter;
-    public GameObject mainRotor;
-    public GameObject tailRotor;
-
-    static Rigidbody rb;
-    Vector3 torqueValue;
-
-    float maxRotorForce = 22241.1081f;
-    float maxRotorVel = 7200.0f;
-    float rotorVel = 0.0f;
-    float rotorRot = 0.0f;
-
-    float maxTailRotorForce = 15000.0f;
-    float maxTailRotorVel = 2200.0f;
-    float tailRotorVel = 0.0f;
-    float tailRotorRot = 0.0f;
-
-    float forwardRotorTorqueMult = 0.5f;
-    float sidewaysRotorTorqueMult = 0.5f;
-
-    bool mainRotorActive = true;
-    bool tailRotorActive = true;
 
     void Start()
     {
@@ -38,6 +17,7 @@ public class Aircraft : MonoBehaviour
     void FixedUpdate()
     {
         // Control Torque applied to the body of the copter based on player input.
+        Vector3 torqueValue = Vector3.zero;
         Vector3 controlTorque = new Vector3(Input.GetAxis("Mouse X") * forwardRotorTorqueMult, 1.0f, -Input.GetAxis("Mouse Y") * sidewaysRotorTorqueMult);
 
         if (mainRotorActive == true) // Main Rotor is active, apply net torque to the copter body as well the lift force to create spinning rotors.
@@ -55,9 +35,9 @@ public class Aircraft : MonoBehaviour
 
         if (tailRotorActive == true) // tail rotor active. apply tail rotor force to net torque, torque to copter body.
         {
-            torqueValue -= (Vector3.up * maxTailRotorVel * tailRotorVel); // subtract rotor max force mult by throttle from net forque and apply copter's body.
+            torqueValue -= (Vector3.up * maxTailRotorForce * tailRotorVel); // subtract rotor max force mult by throttle from net forque and apply copter's body.
         }
-        rb.AddRelativeForce(torqueValue);
+        rb.AddRelativeTorque(torqueValue);
     }
     
     void Update()
@@ -101,5 +81,25 @@ public class Aircraft : MonoBehaviour
         }
     }
 
+    public GameObject mainRotor;
+    public GameObject tailRotor;
+
+    static Rigidbody rb;
+
+    float maxRotorForce = 22241.1081f;
+    float maxRotorVel = 7200.0f;
+    float rotorVel = 0.0f;
+    float rotorRot = 0.0f;
+
+    float maxTailRotorForce = 15000.0f;
+    float maxTailRotorVel = 2200.0f;
+    float tailRotorVel = 0.0f;
+    float tailRotorRot = 0.0f;
+
+    float forwardRotorTorqueMult = 0.5f;
+    float sidewaysRotorTorqueMult = 0.5f;
+
+    bool mainRotorActive = true;
+    bool tailRotorActive = true;
 
 }

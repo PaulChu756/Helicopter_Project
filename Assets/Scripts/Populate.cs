@@ -6,12 +6,12 @@ using System.Collections.Generic;
 public class Populate : MonoBehaviour
 {
     public static List<GameObject> populate = new List<GameObject>();
-    static GameObject usergameobject;
-    public GameObject cookies;
+    static GameObject helicopter;
+    public GameObject copter;
 
     void Start()
     {
-        usergameobject = cookies;
+        helicopter = copter;
     }
 
     [MenuItem("populate/Spawn")]
@@ -19,13 +19,13 @@ public class Populate : MonoBehaviour
     {
         for (int i = 0; i < 10; i++)
         {
-            GameObject whatever;
-            whatever = Instantiate(usergameobject) as GameObject;
+            GameObject spawnCopters;
+            spawnCopters = Instantiate(helicopter) as GameObject;
             float posx = Random.Range(-20, 20);
             float posy = Random.Range(1, 20);
             float posz = Random.Range(-20, 20);
-            whatever.transform.position = new Vector3(posx, posy, posz);
-            populate.Add(whatever);
+            spawnCopters.transform.position = new Vector3(posx, posy, posz);
+            populate.Add(spawnCopters);
         }
     }
 
